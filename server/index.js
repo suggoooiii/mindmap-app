@@ -109,3 +109,60 @@ const server = app
       process.exit(1);
     }
   });
+// Handle graceful shutdown
+process.on("SIGINT", () => {
+  console.log("Shutting down server...");
+  server.close(() => {
+    console.log("Server shut down gracefully");
+    process.exit(0);
+  });
+});
+// Handle uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+  server.close(() => {
+    console.log("Server shut down due to uncaught exception");
+    process.exit(1);
+  });
+});
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled promise rejection:", err);
+  server.close(() => {
+    console.log("Server shut down due to unhandled promise rejection");
+    process.exit(1);
+  });
+});
+// Handle SIGTERM signal
+process.on("SIGTERM", () => {
+  console.log("Received SIGTERM signal, shutting down server...");
+  server.close(() => {
+    console.log("Server shut down gracefully");
+    process.exit(0);
+  });
+});
+// Handle SIGUSR2 signal (for nodemon restarts)
+process.on("SIGUSR2", () => {
+  console.log("Received SIGUSR2 signal, restarting server...");
+  server.close(() => {
+    console.log("Server shut down gracefully");
+    process.exit(0);
+  });
+});
+// Handle uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+  server.close(() => {
+    console.log("Server shut down due to uncaught exception");
+    process.exit(1);
+  });
+});
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled promise rejection:", err);
+  server.close(() => {
+    console.log("Server shut down due to unhandled promise rejection");
+    process.exit(1);
+  });
+});
+// Handle SIGTERM signal
